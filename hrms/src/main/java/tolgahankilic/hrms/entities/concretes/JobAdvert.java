@@ -11,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -52,17 +51,14 @@ public class JobAdvert {
 	@Column(name = "status")
 	private boolean status;
 	
-	@JsonIgnoreProperties({"user_id","web_address","phone_number","email","password","status"})
 	@ManyToOne()
 	@JoinColumn(name = "employer_id")
 	private Employer employer;
 	
-	@JsonIgnoreProperties({"id"})
 	@ManyToOne()
 	@JoinColumn(name = "city_id", nullable = false)
 	private City city;
 	
-	@JsonIgnoreProperties({"id"})
 	@ManyToOne()
 	@JoinColumn(name = "job_position_id", nullable = false)
 	private JobPosition jobPosition;
