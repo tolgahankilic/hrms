@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tolgahankilic.hrms.business.abstracts.JobPositionService;
+import tolgahankilic.hrms.core.utilities.business.BusinessRules;
 import tolgahankilic.hrms.core.utilities.results.DataResult;
 import tolgahankilic.hrms.core.utilities.results.ErrorResult;
 import tolgahankilic.hrms.core.utilities.results.Result;
@@ -20,26 +21,33 @@ public class JobPositionManager implements JobPositionService {
 
 	@Autowired
 	public JobPositionManager(JobPositionDao jobPositionDao) {
-		super();
 		this.jobPositionDao = jobPositionDao;
 	}
 
 	@Override
-    public DataResult<List<JobPosition>> getAll() {
-        return new SuccessDataResult<List<JobPosition>>(this.jobPositionDao.findAll(),"Listed data");
-    }
+	public DataResult<List<JobPosition>> getAll() {
+		return new SuccessDataResult<List<JobPosition>>(this.jobPositionDao.findAll(), "Job positions listed");
+	}
 
-    @Override
-    public DataResult<JobPosition> getByPositionName(String positionName) {
-    	return new SuccessDataResult<JobPosition>(this.jobPositionDao.findByPositionName(positionName));
-    }
+	@Override
+	public Result add(JobPosition jobPosition) {
+		Result result = BusinessRules.run(checkDepartment(jobPosition.getPositionName()));
 
-    @Override
-    public Result add(JobPosition position) {
-        if (getByPositionName(position.getPositionName()).getData() != null){
-            return new ErrorResult(position.getPositionName() + "Positions cannot repeat");
-        }
-        this.jobPositionDao.save(position);
-        return new SuccessResult("Added position");
-    }
+		if (result != null) {
+			return result;
+		}
+
+		this.jobPositionDao.save(jobPosition);
+		return new SuccessResult("Job position added");
+	}
+
+	private Result checkDepartment(String name) {
+
+		var result = this.jobPositionDao.getByPositionName(name);
+
+		if (result != null) {
+			return new ErrorResult("Job position already added");
+		}
+		return new SuccessResult();
+	}
 }

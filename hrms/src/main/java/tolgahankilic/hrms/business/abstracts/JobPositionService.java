@@ -8,6 +8,5 @@ import tolgahankilic.hrms.entities.concretes.JobPosition;
 
 public interface JobPositionService {
 	DataResult<List<JobPosition>> getAll();
-    DataResult<JobPosition> getByPositionName(String positionName);
-    Result add(JobPosition position);
+	Result add(JobPosition department);
 }

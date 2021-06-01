@@ -1,10 +1,10 @@
 package tolgahankilic.hrms.business.abstracts;
 
-import java.util.List;
-
 import tolgahankilic.hrms.core.utilities.results.DataResult;
-import tolgahankilic.hrms.entities.concretes.User;
+import tolgahankilic.hrms.core.utilities.results.Result;
+import tolgahankilic.hrms.core.entities.concretes.User;
 
 public interface UserService {
-	DataResult<List<User>> getAll();
+	DataResult<User> getByEmail(String email);
+	Result add(User user); 
 }

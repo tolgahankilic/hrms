@@ -1,5 +1,7 @@
 package tolgahankilic.hrms.core.utilities.adapters;
 
+import tolgahankilic.hrms.core.utilities.results.Result;
+
 public interface EmailService {
-	boolean validate(String email);
+	Result validate(String email);
 }

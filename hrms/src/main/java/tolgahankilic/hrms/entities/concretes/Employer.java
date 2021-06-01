@@ -1,44 +1,45 @@
 package tolgahankilic.hrms.entities.concretes;
 
-import javax.persistence.CascadeType;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import tolgahankilic.hrms.core.entities.concretes.User;
 
 @Data
 @Entity
 @Table(name = "employers")
 @NoArgsConstructor
-@AllArgsConstructor
-public class Employer {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
-
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "userid", referencedColumnName = "id")
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	private User user;
-
-	@Column(name = "companyname")
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+@EqualsAndHashCode(callSuper = false)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobAdverts" })
+public class Employer extends User {
+	@Column(name = "company_name", nullable = false)
 	private String companyName;
 
-	@Column(name = "website")
+	@Column(name = "website", nullable = false)
 	private String website;
 
-	@Column(name = "phonenumber")
+	@Column(name = "phone_number", nullable = false)
 	private String phoneNumber;
+
+	@OneToMany(mappedBy = "employer")
+	private List<JobAdvert> jobAdverts;
+
+	public Employer(int id, String email, String password, boolean status, String companyName, String website,
+			String phoneNumber) {
+		super(id, email, password, status);
+		this.companyName = companyName;
+		this.website = website;
+		this.phoneNumber = phoneNumber;
+	}
 }

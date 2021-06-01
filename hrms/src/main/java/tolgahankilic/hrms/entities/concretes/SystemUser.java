@@ -1,40 +1,36 @@
 package tolgahankilic.hrms.entities.concretes;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import tolgahankilic.hrms.core.entities.concretes.User;
 
 @Data
 @Entity
 @Table(name = "system_users")
-@AllArgsConstructor
 @NoArgsConstructor
-public class SystemUser {
+@EqualsAndHashCode(callSuper = false)
+@PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+public class SystemUser extends User {
+	@Column(name = "first_name", nullable = false)
+	private String firstName;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+	@Column(name = "last_name", nullable = false)
+	private String lastName;
 
-	@Column(name = "role")
-	private String role;
+	@Column(name = "nationality_id", nullable = false)
+	private String nationalityId;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "userid", referencedColumnName = "id")
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	private User user;
-
+	public SystemUser(int id, String email, String password, boolean status, String firstName, String lastName,
+			String nationalityId) {
+		super(id, email, password, status);
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.nationalityId = nationalityId;
+	}
 }

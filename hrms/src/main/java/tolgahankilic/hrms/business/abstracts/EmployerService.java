@@ -7,7 +7,6 @@ import tolgahankilic.hrms.core.utilities.results.Result;
 import tolgahankilic.hrms.entities.concretes.Employer;
 
 public interface EmployerService {
-	Result add(Employer employer);
-
 	DataResult<List<Employer>> getAll();
+	Result add(Employer employer);
 }

@@ -7,7 +7,7 @@ import tolgahankilic.hrms.core.utilities.results.Result;
 import tolgahankilic.hrms.entities.concretes.JobSeeker;
 
 public interface JobSeekerService {
-	Result add(JobSeeker jobSeeker);
-
 	DataResult<List<JobSeeker>> getAll();
+	DataResult<JobSeeker> getByNationalityId(String nationalityId);
+	Result add(JobSeeker jobSeeker);
 }
