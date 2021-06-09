@@ -1,6 +1,7 @@
 package tolgahankilic.hrms.entities.concretes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -43,7 +45,8 @@ public class JobAdvert {
 	private int numberOfHires;
 	
 	@Column(name = "created_date")
-	private LocalDate createdDate;
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private LocalDateTime createdDate = LocalDateTime.now();
 	
 	@Column(name = "application_deadline")
 	private LocalDate applicationDeadline;

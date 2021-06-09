@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,7 +18,7 @@ import tolgahankilic.hrms.core.entities.concretes.User;
 
 @Data
 @Entity
-@Table(name = "employers")
+@Table(name = "employers", uniqueConstraints = { @UniqueConstraint(columnNames = { "company_name" }) })
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
 @EqualsAndHashCode(callSuper = false)
@@ -35,11 +36,11 @@ public class Employer extends User {
 	@OneToMany(mappedBy = "employer")
 	private List<JobAdvert> jobAdverts;
 
-	public Employer(int id, String email, String password, boolean status, String companyName, String website,
-			String phoneNumber) {
-		super(id, email, password, status);
-		this.companyName = companyName;
-		this.website = website;
-		this.phoneNumber = phoneNumber;
-	}
+//	public Employer(int id, String email, String password, boolean status, String companyName, String website,
+//			String phoneNumber) {
+//		super(id, email, password, status);
+//		this.companyName = companyName;
+//		this.website = website;
+//		this.phoneNumber = phoneNumber;
+//	}
 }

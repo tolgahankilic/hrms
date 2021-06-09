@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -19,19 +19,24 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "job_positions", uniqueConstraints = {@UniqueConstraint(columnNames = {"position_name"})})
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobAdverts" })
-public class JobPosition {
+@Table(name = "social_medias")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "curriculumVitaes" })
+public class SocialMedia {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "position_name")
-	private String positionName;
+	@Column(name = "github_username")
+	private String githubUsername;
 
-	@OneToMany(mappedBy = "jobPosition")
-	private List<JobAdvert> jobAdverts;
+	@Column(name = "linkedin_username")
+	private String linkedinUsername;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "socialMedia")
+	private List<CurriculumVitae> curriculumVitaes;
 }

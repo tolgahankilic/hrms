@@ -9,9 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,19 +20,22 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "job_positions", uniqueConstraints = {@UniqueConstraint(columnNames = {"position_name"})})
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "jobAdverts" })
-public class JobPosition {
+@Table(name = "languages")
+public class Language {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "position_name")
-	private String positionName;
+	@NotNull
+	@NotBlank
+	@Column(name = "language_name")
+	private String languageName;
 
-	@OneToMany(mappedBy = "jobPosition")
-	private List<JobAdvert> jobAdverts;
+	@JsonIgnore
+	@OneToMany(mappedBy = "language")
+	private List<JobSeekerLanguage> jobSeekerLanguages;
 }

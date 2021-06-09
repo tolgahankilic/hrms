@@ -26,11 +26,11 @@ public class SystemUser extends User {
 	@Column(name = "nationality_id", nullable = false)
 	private String nationalityId;
 
-	public SystemUser(int id, String email, String password, boolean status, String firstName, String lastName,
-			String nationalityId) {
-		super(id, email, password, status);
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.nationalityId = nationalityId;
-	}
+//	public SystemUser(int id, String email, String password, boolean status, String firstName, String lastName,
+//			String nationalityId) {
+//		super(id, email, password, status);
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.nationalityId = nationalityId;
+//	}
 }

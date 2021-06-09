@@ -33,8 +33,6 @@ public class JobAdvertManager implements JobAdvertService {
 
 	@Override
 	public Result add(JobAdvert jobAdvert) {
-		//jobAdvert.getCreatedDate().equals(LocalDate.now());
-		jobAdvert.setCreatedDate(LocalDate.now());
 		this.jobAdvertDao.save(jobAdvert);
 		return new SuccessResult("Job advert added");
 	}
